@@ -79,7 +79,7 @@ function startGame() {
   score = 0;
   scoreDisplay.innerHTML = `Score: ${score}`;
   showNextWord();
-  timer = setInterval(countdown, 100);
+  timer = setInterval(countdown, 1000);
   resultContainer.classList.add('hidden');
 }
 function countdown() {
