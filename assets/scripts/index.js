@@ -41,17 +41,21 @@ function updateScore() {
 }
 
 function startGame() {
+
   wordsTemp = [...words];
   backgroundSound.play();
+  correctCheckSound.play();
   startBtn.disabled = true;
+  startBtn.style.display = 'none';
   inputField.disabled = false;
   inputField.focus();
   timeLeft = 99;
   timerElement.textContent = `Time left: ${timeLeft}`;
   score = 0;
-  scoreDisplay.innerHTML = `Score: ${score}`;
+  scoreDisplay.textContent = `Score: ${score}`; // Display the initial score
   showNextWord();
   timer = setInterval(countdown, 100);
+  resultContainer.classList.add('hidden');
 }
 
 function countdown() {
@@ -105,7 +109,7 @@ function checkInput() {
   if (inputField.value === currentWord) {
     inputField.value = "";
     score++;
-    scoreDisplay.textContent = score;
+    scoreDisplay.textContent = `Score: ${score}`; // Update the score display
     showNextWord();
   }
 }
@@ -119,7 +123,10 @@ function loadScores() {
 }
 
 function endGame() {
-  startBtn.disabled = false;
+  startBtn.disabled = true;
+  startBtn.removeEventListener('click', startGame);
+  startBtn.addEventListener('click', restartGame);
+
   inputField.disabled = true;
   inputField.value = "";
   const percentage = (score / words.length) * 100;
@@ -129,30 +136,37 @@ function endGame() {
     percentage: percentage
   };
 
+  // Save the score to localStorage
   let scoresArray = loadScores();
   scoresArray.push(gameScore);
+
+  // Sort scores by hits
   scoresArray.sort((a, b) => b.hits - a.hits);
+
+  // Keep only the top 50 scores
   scoresArray.splice(50);
+
+  // Save the updated scores array back to localStorage
   saveScores(scoresArray);
 
+  // Display top 9 scores
   const topScores = scoresArray.slice(0, 9);
   console.log("Top 9 scores:", topScores);
 
-  resultContainer.innerHTML = '';
+  backgroundSound.pause();
+  backgroundSound.currentTime = 0;
   const scoreElement = document.createElement('p');
   scoreElement.textContent = `Score: ${score}`;
   const percentageElement = document.createElement('p');
   percentageElement.textContent = `Percentage: ${percentage.toFixed(2)}%`;
-  const dateElement = document.createElement('p');
-  dateElement.textContent = `Date: ${gameScore.date.toLocaleString()}`;
+  resultContainer.innerHTML = '';
   resultContainer.appendChild(scoreElement);
   resultContainer.appendChild(percentageElement);
-  resultContainer.appendChild(dateElement);
 
   const topScoresList = document.createElement('ol');
   topScores.forEach(score => {
     const listItem = document.createElement('li');
-    listItem.textContent = `Score: ${score.hits}, Percentage: ${score.percentage.toFixed(2)}%, Date: ${new Date(score.date).toLocaleString()}`;
+    listItem.textContent = `Score: ${score.hits}, Percentage: ${score.percentage.toFixed(2)}%`;
     topScoresList.appendChild(listItem);
   });
   resultContainer.appendChild(topScoresList);
@@ -160,4 +174,26 @@ function endGame() {
   resultContainer.classList.remove('hidden');
   endSound.play();
 }
+function restartGame() {
+  // Stop the timer if it is running
+  clearInterval(timer);
 
+  // Reset the game state
+  wordsTemp = [...words];
+  timeLeft = 99;
+  score = 0;
+  currentWord = null;
+  inputField.value = '';
+  inputField.disabled = true;
+  wordDisplay.textContent = '';
+  scoreDisplay.textContent = '';
+  timerElement.textContent = '';
+  resultContainer.classList.add('hidden');
+
+  // Reset the UI
+  startBtn.textContent = 'Start Game';
+  startBtn.removeEventListener('click', restartGame);
+  startBtn.addEventListener('click', startGame);
+  inputField.classList.remove('incorrect');
+  showResult(false);
+}

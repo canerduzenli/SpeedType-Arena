@@ -103,16 +103,14 @@ label {
   background: linear-gradient(235deg, #333333, #CCCCCC);
   border: 2px solid #000;
   border-radius: 10px;
-  padding: 20px;
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: 20%;
+  right: 0%;
   text-align: center;
 }
 
 .result-container.hidden {
-  display: none;
+  display: block;
 }
 
 .result-container h2 {
