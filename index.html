@@ -10,26 +10,30 @@
 </head>
 
 <body>
-  <h1>SpeedType Arena</h1>
-  <div class="info-container">
-    <div id="scoreDisplay" class="info-box">Score: 0</div>
-    <div id="timer" class="info-box">Time:0</div>
-  </div>
-  <h1 id="wordElement"></h1>
-  <input type="text" id="inputField" disabled>
-  <button id="startBtn">Start Game</button>
-  <input type="range" id="volumeControl" min="0" max="1" step="0.01">
-  <label for="volumeControl">Volume Control:</label>
-  <div class="result-container hidden">
-    <p id="result-score"></p>
-    <p id="result-percentage"></p>
-  </div>
-  <button id="restartBtn" onclick="restartGame()">Restart Game</button>
-  <audio id="incoreectCheckSound" src="./assets/sounds/failure-drum-.mp3"></audio>
-  <audio id="correctCheckSound" src="./assets/sounds/mixkit-.wav"></audio>
-  <audio id="endSound" src="./assets/sounds/mixkit-animated-small-group-applause-523.wav"></audio>
+  <div class="container">
+    <h1><span class="gradient-text">SpeedType Arena</span></h1>
+    <div class="info-container">
+      <div id="scoreDisplay" class="info-box">Score: 0</div>
+      <div id="timer" class="info-box">Time:0</div>
+    </div>
+    <h1 id="wordElement"></h1>
+    <input type="text" id="inputField" disabled>
+    <div class="controls-container">
+      <button id="startBtn">Start Game</button>
+      <input type="range" id="volumeControl" min="0" max="1" step="0.01">
+      <label for="volumeControl">Volume Control:</label>
+      <button id="restartBtn" onclick="restartGame()">Restart Game</button>
+    </div>
+    <div class="result-container hidden">
+      <p id="result-score"></p>
+      <p id="result-percentage"></p>
+    </div>
 
-  <audio id="backgroundSound" src="./assets/sounds/mozart.mp3" preload="auto" loop></audio>
+    <audio id="incoreectCheckSound" src="./assets/sounds/failure-drum-.mp3"></audio>
+    <audio id="correctCheckSound" src="./assets/sounds/mixkit-.wav"></audio>
+    <audio id="endSound" src="./assets/sounds/mixkit-animated-small-group-applause-523.wav"></audio>
+
+    <audio id="backgroundSound" src="./assets/sounds/mozart.mp3" preload="auto" loop></audio>
 
 </body>
 
