@@ -54,7 +54,7 @@ function startGame() {
   score = 0;
   scoreDisplay.textContent = `Score: ${score}`; // Display the initial score
   showNextWord();
-  timer = setInterval(countdown, 100);
+  timer = setInterval(countdown, 300);
   resultContainer.classList.add('hidden');
 }
 
